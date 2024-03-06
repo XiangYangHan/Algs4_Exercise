@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Exercises {
     public static void main(String[] args) {
@@ -42,14 +44,43 @@ public class Exercises {
         }
     }
 
-    private static int F(int N) {
-        if (N == 0) {
-            return 0;
+    private static long F(int N) {
+        class InnerFibonacci {
+            Map<Integer, Long> FIBONACCI_RESULT_CACHE;
+
+            public InnerFibonacci() {
+                FIBONACCI_RESULT_CACHE = new HashMap<>();
+                FIBONACCI_RESULT_CACHE.put(0, 0L);
+                FIBONACCI_RESULT_CACHE.put(1, 1L);
+            }
+
+            private long F(int N) {
+                /*
+                不能直接写成这样一句
+                报错：java.util.ConcurrentModificationException
+                因为computeIfAbsent，在键不存在使用apply计算结果前后会比较map对象的modCount
+
+                return FIBONACCI_RESULT_CACHE.computeIfAbsent(N, n -> F(n - 1) + F(n - 2));
+                */
+
+                if (FIBONACCI_RESULT_CACHE.containsKey(N)) {
+                    return FIBONACCI_RESULT_CACHE.get(N);
+                }
+                long result = F(N - 1) + F(N - 2);
+                FIBONACCI_RESULT_CACHE.put(N, result);
+                return result;
+            }
         }
-        if (N == 1) {
-            return 1;
-        }
-        return F(N - 1) + F(N - 2);
+
+        return new InnerFibonacci().F(N);
+
+        // if (N == 0) {
+        //     return 0;
+        // }
+        // if (N == 1) {
+        //     return 1;
+        // }
+        // return F(N - 1) + F(N - 2);
     }
 
     private static void q18() {
