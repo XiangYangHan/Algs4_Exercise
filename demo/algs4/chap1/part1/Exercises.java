@@ -14,7 +14,7 @@ public class Exercises {
         // q3(args);
         // q5();
         // q6();
-        // q7();
+        q7();
         // q8();
         /*
         q9(10);
@@ -34,7 +34,7 @@ public class Exercises {
         // q15();
         // q16();
         // q18();
-        q19();
+        // q19();
 
     }
 
@@ -260,28 +260,35 @@ public class Exercises {
     }
 
     public static void q7() {
+        // 求t的平方根
         double t = 9.0;
         while (Math.abs(t - 9.0 / t) > 0.000001) {
-            t = (9.0 / t + t) / 2.0;
+            t = (t + 9.0 / t) / 2.0;
         }
         StdOut.printf("%.10f\n", t);
         StdOut.println();
 
-        for (int k = 2; k < 10; k++) {
+        for (int k = 2; k < 100; k++) {
+            // 求 1 + 2 + 3 + ··· + (k - 1) >>> k * (k - 1) / 2
             int sum = 0;
             for (int i = 1; i < k; i++) {
                 for (int j = 0; j < i; j++) {
                     sum++;
                 }
             }
-            StdOut.printf("%3d: %5d\n", k - 1, sum);
+            StdOut.printf("%3d: %5d\n", k, sum);
         }
         StdOut.println();
 
         for (int k = 2; k < 100; k++) {
+            /*
+            外部循环次数为小于log(k)的最大整数
+            内层循环每次k次
+            整体计算为 k * (小于log(k)的最大整数)
+             */
             int sum = 0;
             for (int i = 1; i < k; i *= 2) {
-                for (int j = 0; j < i; j++) {
+                for (int j = 0; j < k; j++) {
                     sum++;
                 }
             }
