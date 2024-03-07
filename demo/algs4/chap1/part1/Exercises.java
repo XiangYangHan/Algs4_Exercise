@@ -14,7 +14,7 @@ public class Exercises {
         // q3(args);
         // q5();
         // q6();
-        q7();
+        // q7();
         // q8();
         /*
         q9(10);
@@ -35,7 +35,27 @@ public class Exercises {
         // q16();
         // q18();
         // q19();
+        q20();
+    }
 
+    private static void q20() {
+        // 编写一个递归的静态方法计算ln(N!)
+        /*
+           根据对数恒等式： lnMN = lnM + lnN
+           N = N * (N - 1) * (N - 2) * ··· * 2 * 1
+           ln(N!)
+             = lnN + ln(N - 1) + ln(N - 2) + ··· + ln2 + ln1
+         */
+        for (int i = 0; i < 100; i++) {
+            StdOut.printf("ln(%2d!): %7.3f\n", i, factorialLog(i));
+        }
+    }
+
+    private static double factorialLog(int N) {
+        if (N <= 1) {
+            return 0; // ln(0!) = ln(1!) = 0
+        }
+        return Math.log(N) + factorialLog(N - 1);
     }
 
     private static void q19() {
